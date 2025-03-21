@@ -1,8 +1,8 @@
 
-const gallery = document.getElementById('gallery');
+const gallery = document.getElementById("gallery");
 const detailedImage = document.querySelector(".detailedContainer--image");
 const detailedTitle = document.querySelector(".detailedContainer--title");
-const galleryImages = document.querySelectorAll(".gallery--item_image");
+
 
 drawImages(gallery);
 
@@ -12,8 +12,9 @@ async function drawImages(element) {
   const images = getImages(data);
   const types = getTypes(data);
   const details = getDetailes(data);
-  const items = getItems(images, types, details);
+  const items = getItems(images, types, details);  
   element.innerHTML = items;
+  const galleryImages = document.querySelectorAll(".gallery--item_image");
   for (let i = 0; i < galleryImages.length; i++) {
     galleryImages[i].addEventListener("click", function () {
       setDetails(galleryImages[i]);
@@ -46,16 +47,22 @@ function getDetailes(data){
   return details;
 }
 
-function getItems(images, types, details){
-  const items = images.map(getItem, types, details);
-  return items.join('');
+function getItems(images, types, details) {
+  const allItems = [];
+  for (let i = 0; i < images.length; i++) {
+    allItems[i] = {image: images[i], type: types[i], detail: details[i]};
+  }
+  const items = allItems.map(getItem);
+  return items.join("");
 }
 
-function getItem(image, type, detail){
+function getItem(list) {
+
+  
   const item = `<li class="gallery--item">
-  <img src =${image} alt="${type} cat" class="gallery--item_image data-detailed-image=${image} data-detailed-title= ${detail}>
-  <span class="gallery--item_title">${type} cat</span>
-  </li>`
+  <img src ="${list.image}" alt="${list.type} cat" class="gallery--item_image" data-detailed-image="${list.image}" data-detailed-title= "${list.detail}">
+  <span class="gallery--item_title">${list.type} cat</span>
+  </li>`;
   return item;
 }
 
