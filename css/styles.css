@@ -112,7 +112,7 @@ h2 {
   display: block;
   width: var(--width-gallery-image);
   height: calc(var(--width-gallery-image) * 0.25);
-  font-size: 1.8rem;
+  font-size: 1.5rem;
   font-family: 'Open Sans';
   font-weight: 600;
   background-color: var(--background-color-title);
@@ -204,7 +204,7 @@ h2 {
   }
   .gallery--item_title {
     display: block;
-    font-size: 2.5rem;
+    font-size: 2rem;
     text-align: center;
   }
   .gallery--item_image {

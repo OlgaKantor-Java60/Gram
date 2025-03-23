@@ -2,19 +2,22 @@
 const gallery = document.getElementById("gallery");
 const detailedImage = document.querySelector(".detailedContainer--image");
 const detailedTitle = document.querySelector(".detailedContainer--title");
+let galleryImages;
 
+drawGalleryItems();
 
-drawImages(gallery);
-
-async function drawImages(element) {
+async function drawGalleryItems() {
   const response = await fetch("https://api.thecatapi.com/v1/breeds");
   const data = await response.json();
-  const images = getImages(data);
-  const types = getTypes(data);
-  const details = getDetailes(data);
-  const items = getItems(images, types, details);  
-  element.innerHTML = items;
-  const galleryImages = document.querySelectorAll(".gallery--item_image");
+  const itemsData = getItemsData(data); //input data from API, output array of objects 
+   // {itemImage, detailedImage, title, detailedTitle}
+  const items = getItems(itemsData);
+  gallery.innerHTML = items;
+  galleryImages = document.querySelectorAll(".gallery--item_image");
+  addListeners();
+}
+
+function addListeners() {
   for (let i = 0; i < galleryImages.length; i++) {
     galleryImages[i].addEventListener("click", function () {
       setDetails(galleryImages[i]);
@@ -32,36 +35,36 @@ function setDetails(galleryImage) {
   animate();
 }
 
-function getImages(data){
-  const images = data.map(record => `https://cdn2.thecatapi.com/images/${record.reference_image_id}.jpg`);
-  return images;
+function getItemsData(data) {
+  const itemsData = data.map(record => ({
+    itemImage: getImage(record.reference_image_id), 
+    detailedImage: getImage(record.reference_image_id),
+    title: record.name,
+    detailedTitle: record.description
+  }))
+  return itemsData;
 }
 
-function getTypes(data){
-  const types = data.map(record => `${record.name}`);
-  return types;
+function getImage(id) {
+  return `https://cdn2.thecatapi.com/images/${id}.jpg`
+
 }
 
-function getDetailes(data){
-  const details = data.map(record => `${record.description}`);
-  return details;
-}
-
-function getItems(images, types, details) {
-  const allItems = [];
-  for (let i = 0; i < images.length; i++) {
-    allItems[i] = {image: images[i], type: types[i], detail: details[i]};
-  }
-  const items = allItems.map(getItem);
+function getItems(itemsData) {
+  const items = itemsData.map(getItem);
   return items.join("");
 }
 
-function getItem(list) {
-
-  
-  const item = `<li class="gallery--item">
-  <img src ="${list.image}" alt="${list.type} cat" class="gallery--item_image" data-detailed-image="${list.image}" data-detailed-title= "${list.detail}">
-  <span class="gallery--item_title">${list.type} cat</span>
+function getItem({itemImage, detailedImage, title, detailedTitle}) {
+  const item = `
+  <li class = "gallery--item">
+  <img 
+    src = "${itemImage}" 
+    alt = "${title} cat image" 
+    class = "gallery--item_image" 
+    data-detailed-image = "${detailedImage}"
+    data-detailed-title = "${detailedTitle}">
+  <span class = "gallery--item_title">${title} cat</span>
   </li>`;
   return item;
 }
