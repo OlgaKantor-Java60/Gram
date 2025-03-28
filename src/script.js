@@ -16,7 +16,7 @@ async function drawGalleryItems() {
   galleryImages = document.querySelectorAll(".gallery--item_image");
   addListeners();
 }
-
+blabala
 function addListeners() {
   for (let i = 0; i < galleryImages.length; i++) {
     galleryImages[i].addEventListener("click", function () {
@@ -30,8 +30,7 @@ function setDetails(galleryImage) {
   detailedImage.src = "";
   detailedImage.src = image;
   detailedTitle.innerHTML =
-    galleryImage.getAttribute("data-detailed-title") +
-    '<span class="for_ellipsis">...</span>';
+    galleryImage.getAttribute("data-detailed-title");
   animate();
 }
 
