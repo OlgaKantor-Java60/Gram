@@ -1,11 +1,10 @@
 
-
 body {
   --width-gallery-image: 12rem;
   --width-gallery: calc(var(--width-gallery-image) * 2 + var(--width-gallery-image) / 2);
   --height-gallery-image: 10rem;
-  --background-color-title: aliceblue;
-  --color-title: black;
+  --background-color-title: rgb(0, 0, 0);
+  --color-title: rgb(255, 255, 255);
   --width-detailed-title: 30ch
 
 }
@@ -14,9 +13,7 @@ html {
 }
 body {
   margin: 0;
-  background: url(../images/dalmatian-spots-mobile.svg);
-  background-repeat: no-repeat;
-  background-size: cover;
+  background: url(../images/wavey-fingerprint.svg);
   background-attachment: fixed;
 }
 h2 {
@@ -51,7 +48,6 @@ h2 {
     0% 30%
   );
  
-
 }
 .animation-down {
   animation: zoomInDown;
@@ -61,12 +57,13 @@ h2 {
   animation: zoomInUp;
   animation-duration: 2.5s;
 }
+
 .detailedContainer--title {
   display: inline-block;
   width: var(--width-detailed-title);
   position: absolute;
   font-size: 2rem;
-  font-family: airstream;
+  font-family: 'Allan';
   bottom: 0.5rem;
   left: 3rem;
   background-color: var(--background-color-title);
@@ -74,30 +71,23 @@ h2 {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  
   font-style: italic;
-  
 }
+
 .detailedContainer--title:hover {
-  font-family: airstream;
+  font-family: 'Allan';
   overflow: visible;
   white-space: initial;
   text-overflow: initial;
   font-size: 2rem;
 }
-.for_ellipsis:hover {
-  display: none;
-  z-index: -1;
-}
-.for_ellipsis {
-  display: block;
   
-}
 .gallery--item_image {
   width: var(--width-gallery-image);
   height: var(--height-gallery-image);
   object-fit: cover;
 }
+
 .gallery {
   list-style: none;
   max-height: 50vh;
@@ -108,6 +98,7 @@ h2 {
   justify-content: space-around;
   padding-left: calc(16rem - var(--width-gallery-image))
 }
+
 .gallery--item_title {
   display: block;
   width: var(--width-gallery-image);
@@ -119,9 +110,11 @@ h2 {
   color: var(--color-title);
   text-align: center;
 }
+
 .gallery--item_image {
   display: block;
 }
+
 .gallery--item {
   border: 2px solid lightgrey;
   border-radius: 40px;
@@ -130,13 +123,15 @@ h2 {
   max-height: 15rem;
   margin-top: 10px;
 }
+
 .logo {
   font-family: LakeshoreDrive;
   font-size: 3rem;
   text-align: center;
-  background-color: azure;
+  background-color: rgb(11, 13, 13);
   text-transform: uppercase;
   letter-spacing: 8px;
+  color: aliceblue;
 }
 
 @media screen and (min-width: 500px) {
@@ -148,7 +143,6 @@ h2 {
   .detailedContainer--title {
     bottom: 6rem;
   }
-
   
   .gallery {
     max-height: 80vh;
@@ -171,9 +165,7 @@ h2 {
     --width-gallery: calc(var(--width-gallery-image) * 2 + var(--width-gallery-image) / 2);
     --height-gallery-image: 15rem;
   }
-  body {
-    background: url(../images/diamond-sunset.svg);
-  }
+
   .detailedContainer--title:hover {
     
     font-size: 5rem;
@@ -190,11 +182,8 @@ h2 {
     position: absolute;
     font-size: 4rem;
     bottom: 2rem;
-    left: -10rem;
+    left: -4rem;
   }
-  
- 
-
   
   .gallery {
     list-style: none;
