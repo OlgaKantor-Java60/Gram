@@ -1,17 +1,25 @@
 
 const gallery = document.getElementById("gallery");
+const formElement = document.getElementById("query-form");
+const inputElements = document.querySelectorAll("#query-form [name]");
 const detailedImage = document.querySelector(".detailedContainer--image");
 const detailedTitle = document.querySelector(".detailedContainer--title");
-let galleryImages;
-const urlImages = 'https://www.themoviedb.org/t/p/w1280/'
+const mainElement = document.querySelector(".main");
+const buttonBack = document.querySelector(".button-back");
+const logo = document.getElementById("logo")
 
-drawGalleryItems();
+let galleryImages;
+let year;
+let page = 1;
+const LANG = 'en-US';
+const urlImages = 'https://www.themoviedb.org/t/p/w1280/'
+const apiKey = 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJmNTkzZmQ0ZjAxYWQyMWU1NmUxMTZlZGM4MzI2NDM4NSIsIm5iZiI6MTc0MzA4MDk5OC41MTUsInN1YiI6IjY3ZTU0ZTI2Zjg0Njc5NGU5OTEwYWY4NSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.7A7Xpob6q6Lt7WsFIUwMAGUmTlnapruvzWDFQ9gvX_4'
 
 async function drawGalleryItems() {
-  const response = await fetch('https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=en-US&page=1&primary_release_year=1994&sort_by=popularity.desc', {
+  const response = await fetch(getFetchUrl(LANG, page, year), {
     headers: {
       accept: 'application/json',
-      Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJmNTkzZmQ0ZjAxYWQyMWU1NmUxMTZlZGM4MzI2NDM4NSIsIm5iZiI6MTc0MzA4MDk5OC41MTUsInN1YiI6IjY3ZTU0ZTI2Zjg0Njc5NGU5OTEwYWY4NSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.7A7Xpob6q6Lt7WsFIUwMAGUmTlnapruvzWDFQ9gvX_4'
+      Authorization: apiKey
     }
   })
   const data = await response.json();
@@ -19,7 +27,21 @@ async function drawGalleryItems() {
   const items = getItems(itemsData);
   gallery.innerHTML = items;
   galleryImages = document.querySelectorAll(".gallery--item_image");
+  
   addListeners();
+  logo.innerHTML = `Best movies of ${year}`
+  detailedImage.src = "images/default.jpg";
+  detailedTitle.innerHTML = 'Please select a movie for getting description';
+}
+
+function getFetchUrl(lang, page, year) {
+  return `https://api.themoviedb.org/3/discover/movie?
+include_adult=false&
+include_video=false&
+language=${lang}&
+page=${page}&
+primary_release_year=${year}&
+sort_by=popularity.desc`
 }
 
 function addListeners() {
@@ -72,6 +94,11 @@ function getItem({itemImage, detailedImage, title, detailedTitle}) {
   return item;
 }
 
+function getButtonNext(){
+  return `<button class="button button-next">Next</button>`
+}
+
+
 function animate() {
   detailedImage.classList.remove("animation-up");
   detailedTitle.classList.remove("animation-down");
@@ -79,5 +106,28 @@ function animate() {
     detailedImage.classList.add("animation-up");
     detailedTitle.classList.add("animation-down");
   }, 0);
+}
+
+//script actions
+formElement.addEventListener("submit", async function(event){
+  event.preventDefault();
+  const data = getFormData();
+  year = +data.year;
+  await drawGalleryItems();
+  mainElement.classList.remove("hidden");
+  buttonBack.classList.remove("hidden")
+  formElement.classList.add("hidden");
+})
+
+function getFormData() {
+  const inputElementsArr = Array.from(inputElements);
+  const dataObj = inputElementsArr.reduce((res, curr) => ({...res, [curr.name] : curr.value}), {})
+  return dataObj
+}
+
+function moveToInputData() {
+  mainElement.classList.add("hidden");
+  buttonBack.classList.add("hidden")
+  formElement.classList.remove("hidden");
 }
 

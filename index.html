@@ -17,22 +17,36 @@
   </head>
   <body>
     <header>
-      <h2 class="logo">Best movies of 1994</h2>
+      <h2 class="logo" id="logo">Best movies</h2>
     </header>
-    <div class="main">
+    <section class="main hidden">
       <div class="detailedFrame">
         <div class="detailedContainer">
           <img
-            src="images/sddefault.jpg"
-            alt="Best movies of 1994"
+            src=""
+            alt="Best movies"
             class="detailedContainer--image animation-up"
           />
-          <span class="detailedContainer--title animation-down">Please select a movie</span>
+          <span class="detailedContainer--title animation-down"></span>
         </div>
       </div>
       <ul class="gallery" id="gallery">
       </ul>
-    </div>
-    <script src="src/script.js" type="module"></script>
+    </section>
+    <section>
+      <form id="query-form" class="input-form">
+        <div class ="input-group">
+          <label class = "input-label">Year</label>
+          <input required class="input-element" type="number" name="year" 
+                  placeholder="Enter year" min="1874" max="2025">
+        </div>
+        <div class="input-buttons">
+          <button type="submit" class="button button-submit">Submit</button>
+          <button type="reset" class="button button-reset">Reset</button>
+        </div>
+      </form>
+    </section>
+    <button class="button button-back hidden" onclick="moveToInputData()">Home</button>
+    <script src="src/script.js"></script>
   </body>
 </html>
