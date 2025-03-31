@@ -5,9 +5,10 @@ const inputElements = document.querySelectorAll("#query-form [name]");
 const detailedImage = document.querySelector(".detailedContainer--image");
 const detailedTitle = document.querySelector(".detailedContainer--title");
 const mainElement = document.querySelector(".main");
-const buttonBack = document.querySelector(".button-back");
+const buttonHome = document.querySelector(".button-home");
 const logo = document.getElementById("logo")
-
+let buttonNext;
+let buttonBack;
 let galleryImages;
 let year;
 let page = 1;
@@ -27,9 +28,10 @@ async function drawGalleryItems() {
   const items = getItems(itemsData);
   gallery.innerHTML = items;
   galleryImages = document.querySelectorAll(".gallery--item_image");
-  
+  buttonNext = document.querySelector(".button-next");
+  buttonBack = document.querySelector(".button-back");
   addListeners();
-  logo.innerHTML = `Best movies of ${year}`
+  logo.innerHTML = `Best movies of ${year}, page ${page}`
   detailedImage.src = "images/default.jpg";
   detailedTitle.innerHTML = 'Please select a movie for getting description';
 }
@@ -50,7 +52,18 @@ function addListeners() {
       setDetails(galleryImages[i]);
     });
   }
+  buttonNext.addEventListener("click", function(){
+    page++;
+    drawGalleryItems()
+  });
+  buttonBack.addEventListener("click", function(){
+    if(page>1){
+    page--;
+    drawGalleryItems()
+    }
+  });
 }
+
 
 function setDetails(galleryImage) {
   let image = galleryImage.getAttribute("data-detailed-image");
@@ -77,7 +90,7 @@ function getImage(id) {
 
 function getItems(itemsData) {
   const items = itemsData.map(getItem);
-  return items.join("");
+  return items.join("")+getNavButtons();
 }
 
 function getItem({itemImage, detailedImage, title, detailedTitle}) {
@@ -94,10 +107,10 @@ function getItem({itemImage, detailedImage, title, detailedTitle}) {
   return item;
 }
 
-function getButtonNext(){
-  return `<button class="button button-next">Next</button>`
+function getNavButtons(){
+  return `<div><button class="button button-back">Back</button>
+  <button class="button button-next">Next</button></div>`
 }
-
 
 function animate() {
   detailedImage.classList.remove("animation-up");
@@ -115,7 +128,7 @@ formElement.addEventListener("submit", async function(event){
   year = +data.year;
   await drawGalleryItems();
   mainElement.classList.remove("hidden");
-  buttonBack.classList.remove("hidden")
+  buttonHome.classList.remove("hidden")
   formElement.classList.add("hidden");
 })
 
@@ -127,7 +140,9 @@ function getFormData() {
 
 function moveToInputData() {
   mainElement.classList.add("hidden");
-  buttonBack.classList.add("hidden")
+  buttonHome.classList.add("hidden")
   formElement.classList.remove("hidden");
+  logo.innerHTML = `Best movies`
+  page = 1;
 }
 

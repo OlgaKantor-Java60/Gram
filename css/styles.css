@@ -143,7 +143,7 @@ h2 {
   display: none;
 }
 
-.button-back.hidden{
+.button-home.hidden{
   display: none;
 }
 
@@ -170,13 +170,14 @@ h2 {
   margin-bottom: 2vh;
 }
 
-.button-back {
+.button-home {
   position: absolute;
   left: 90vw;
   top: 10vh;
 }
 
 .button{
+  width: 6vw;
   align-items: center;
   background-color: initial;
   background-image: linear-gradient(#464d55, #25292e);
@@ -188,9 +189,9 @@ h2 {
   cursor: pointer;
   display: inline-flex;
   flex-direction: row;
-  font-family: expo-brand-demi,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
-  font-size: 18px;
-  height: 52px;
+  font-family: 'Open Sans';
+  font-size: 1.5rem;
+  min-height: 52px;
   justify-content: center;
   line-height: 1;
   margin: 2vh;
@@ -198,11 +199,11 @@ h2 {
   padding: 0 32px;
   text-align: center;
   text-decoration: none;
-  transform: translate3d(0, 0, 0);
   transition: all 150ms;
   vertical-align: baseline;
   white-space: nowrap;
 }
+
 
 .button:hover {
   box-shadow: rgba(0, 1, 0, .2) 0 2px 8px;
@@ -299,8 +300,3 @@ h2 {
 }
 
 
-@media (max-width: 420px) {
-  .button {
-    height: 48px;
-  }
-}
